@@ -3,79 +3,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Someone Special ❤️</title>
+<title>For You 🌻</title>
 
 <style>
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #ffdde1, #ee9ca7);
-  overflow: hidden;
+  background: linear-gradient(135deg, #fceabb, #f8b500);
   text-align: center;
-  color: #fff;
+  color: #5a3e1b;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .container {
-  margin-top: 12%;
-  animation: fadeIn 2s ease-in;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  max-width: 500px;
+  z-index: 1;
 }
 
 h1 {
-  font-size: 3em;
+  font-size: 2.6em;
 }
 
 p {
   font-size: 1.2em;
+  margin-top: 10px;
 }
 
-button {
-  padding: 12px 25px;
-  background: #ff4d6d;
-  border: none;
-  border-radius: 25px;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 20px;
-  transition: 0.3s;
-}
-
-button:hover {
-  transform: scale(1.1);
-  background: #ff1e4d;
-}
-
-#message {
-  margin-top: 20px;
-  font-size: 1.3em;
-  display: none;
-  animation: fadeIn 2s ease-in;
-}
-
-img {
-  width: 200px;
-  border-radius: 20px;
-  margin-top: 20px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-}
-
-@keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity: 1;}
-}
-
-/* Floating hearts */
-.heart {
+/* Floating Sunflowers */
+.flower {
   position: absolute;
-  bottom: -50px;
-  font-size: 20px;
-  animation: floatUp 6s linear infinite;
-  color: #fff;
+  bottom: -60px;
+  font-size: 28px;
+  animation: floatUp 10s linear infinite;
+  opacity: 0.8;
 }
 
 @keyframes floatUp {
   0% {transform: translateY(0) rotate(0deg); opacity: 1;}
-  100% {transform: translateY(-100vh) rotate(360deg); opacity: 0;}
+  100% {transform: translateY(-110vh) rotate(360deg); opacity: 0;}
 }
 </style>
 </head>
@@ -83,40 +56,25 @@ img {
 <body>
 
 <div class="container">
-  <h1>Happy Valentine’s Day ❤️</h1>
-  <p>You make my universe brighter every day.</p>
-
-  <!-- Replace image link with her photo -->
-  <img src="https://i.imgur.com/3ZQ3Z6D.png" alt="Memory">
-
-  <br>
-  <button onclick="revealLove()">Click for Surprise 💌</button>
-
-  <div id="message">
-    You are my favorite notification,  
-    my best memory,  
-    and my forever person. 🌹  
-  </div>
+  <h1>For You 🌻</h1>
+  <p>You bring warmth, light, and calm into my life — just like sunshine.</p>
+  <p>Every moment with you feels like home.</p>
 </div>
 
 <script>
-function revealLove() {
-  document.getElementById("message").style.display = "block";
+function createFlower() {
+  const flower = document.createElement("div");
+  flower.classList.add("flower");
+  flower.innerHTML = "🌻";
+  flower.style.left = Math.random() * window.innerWidth + "px";
+  flower.style.fontSize = (Math.random() * 20 + 20) + "px";
+  flower.style.animationDuration = (Math.random() * 5 + 7) + "s";
+  document.body.appendChild(flower);
+  setTimeout(() => flower.remove(), 10000);
 }
 
-function createHeart() {
-  const heart = document.createElement("div");
-  heart.classList.add("heart");
-  heart.innerHTML = "❤️";
-  heart.style.left = Math.random() * window.innerWidth + "px";
-  heart.style.fontSize = (Math.random() * 20 + 10) + "px";
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 6000);
-}
-
-setInterval(createHeart, 500);
+setInterval(createFlower, 500);
 </script>
 
 </body>
 </html>
-
