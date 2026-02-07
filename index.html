@@ -19,7 +19,32 @@ body {
   height: 100vh;
 }
 
+/* Chess screen */
+.start-screen {
+  cursor: pointer;
+  text-align: center;
+  animation: pulse 2s infinite;
+}
+
+.start-screen img {
+  width: 120px;
+}
+
+.start-screen p {
+  margin-top: 15px;
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+@keyframes pulse {
+  0% {transform: scale(1);}
+  50% {transform: scale(1.05);}
+  100% {transform: scale(1);}
+}
+
+/* Hidden container initially */
 .container {
+  display: none;
   background: #722F37;
   color: #fff;
   padding: 40px;
@@ -28,7 +53,6 @@ body {
   max-width: 500px;
   z-index: 1;
 }
-
 
 h1 {
   font-size: 2.6em;
@@ -57,13 +81,29 @@ p {
 
 <body>
 
-<div class="container">
+<!-- Chess intro -->
+<div class="start-screen" onclick="startLove()">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Chess.com_logo.svg" alt="chess.com logo">
+  <p>Click here — where it all started ♟️</p>
+</div>
+
+<!-- Main content -->
+<div class="container" id="loveBox">
   <h1>For You Payal</h1>
-  <p>You have changed me alot,I love talking to you and love sharing my feelings with you.</p>
+  <p>We met on chess.com for the first time, and I never knew a simple game could lead to something this beautiful.</p>
+  <p>You’ve changed me a lot. I love talking to you and sharing my feelings with you.</p>
   <p>Every moment I chat with you feels like peace.</p>
 </div>
 
 <script>
+let flowerInterval;
+
+function startLove() {
+  document.querySelector('.start-screen').style.display = 'none';
+  document.getElementById('loveBox').style.display = 'block';
+  flowerInterval = setInterval(createFlower, 500);
+}
+
 function createFlower() {
   const flower = document.createElement("div");
   flower.classList.add("flower");
@@ -74,10 +114,7 @@ function createFlower() {
   document.body.appendChild(flower);
   setTimeout(() => flower.remove(), 10000);
 }
-
-setInterval(createFlower, 500);
 </script>
 
 </body>
 </html>
-
