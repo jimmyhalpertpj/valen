@@ -6,115 +6,237 @@
 <title>For You Payal</title>
 
 <style>
+/* Base */
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
   background: linear-gradient(135deg, #fceabb, #f8b500);
-  text-align: center;
-  color: #5a3e1b;
-  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  overflow: hidden;
 }
 
-/* Chess screen */
+/* hide inputs */
+input[type="checkbox"],
+input[type="radio"] {
+  display: none;
+}
+
+/* 🌻 Floating sunflowers */
+.flowers {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.flowers span {
+  position: absolute;
+  bottom: -50px;
+  font-size: 30px;
+  opacity: 0.8;
+  animation: floatUp 12s linear infinite;
+}
+
+.flowers span:nth-child(1) { left: 10%; animation-duration: 10s; }
+.flowers span:nth-child(2) { left: 25%; animation-duration: 13s; font-size: 26px; }
+.flowers span:nth-child(3) { left: 40%; animation-duration: 11s; }
+.flowers span:nth-child(4) { left: 60%; animation-duration: 14s; font-size: 34px; }
+.flowers span:nth-child(5) { left: 75%; animation-duration: 12s; }
+.flowers span:nth-child(6) { left: 90%; animation-duration: 15s; font-size: 28px; }
+
+@keyframes floatUp {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+}
+
+/* Start screen */
 .start-screen {
-  cursor: pointer;
   text-align: center;
+  cursor: pointer;
   animation: pulse 2s infinite;
+  position: relative;
+  z-index: 1;
 }
 
 .start-screen img {
-  width: 120px;
+  width: 320px;
+  max-width: 90vw;
+  max-height: 60vh;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+  transition: transform 0.3s ease;
+}
+
+.start-screen:hover img {
+  transform: scale(1.03);
 }
 
 .start-screen p {
   margin-top: 15px;
   font-size: 1.2em;
   font-weight: 600;
+  color: #5a3e1b;
 }
 
 @keyframes pulse {
-  0% {transform: scale(1);}
-  50% {transform: scale(1.05);}
-  100% {transform: scale(1);}
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
 
-/* Hidden container initially */
+/* Main container */
 .container {
   display: none;
   background: #722F37;
   color: #fff;
   padding: 40px;
   border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
   max-width: 500px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  text-align: center;
+  position: relative;
   z-index: 1;
 }
 
-h1 {
-  font-size: 2.6em;
+/* Reveal logic */
+#start:checked ~ .start-screen {
+  display: none;
 }
 
-p {
-  font-size: 1.2em;
-  margin-top: 10px;
+#start:checked ~ .container {
+  display: block;
 }
 
-/* Floating Sunflowers */
-.flower {
-  position: absolute;
-  bottom: -60px;
-  font-size: 28px;
-  animation: floatUp 10s linear infinite;
-  opacity: 0.8;
+/* Buttons */
+.buttons {
+  margin-top: 20px;
 }
 
-@keyframes floatUp {
-  0% {transform: translateY(0) rotate(0deg); opacity: 1;}
-  100% {transform: translateY(-110vh) rotate(360deg); opacity: 0;}
+.btn {
+  padding: 12px 30px;
+  font-size: 1.1em;
+  border-radius: 30px;
+  cursor: pointer;
+  margin: 10px;
+  display: inline-block;
+}
+
+.yes {
+  background: #ff6f91;
+  color: white;
+}
+
+.no {
+  background: #ddd;
+  color: #333;
+}
+
+/* Responses */
+.response {
+  display: none;
+  margin-top: 20px;
+  font-size: 1.3em;
+}
+
+#yes:checked ~ .response.yes-text {
+  display: block;
+}
+
+#no:checked ~ .response.no-text {
+  display: block;
+}
+
+/* 👇 IMAGE + MESSAGE ON NO */
+.no-warning {
+  display: none;
+  margin-top: 25px;
+  animation: appear 0.4s ease forwards;
+}
+
+.no-warning img {
+  width: 260px;
+  max-width: 80vw;
+  display: block;
+  margin: 0 auto 10px;
+}
+
+.no-warning p {
+  font-size: 1.4em;
+  font-weight: 600;
+}
+
+/* show ONLY when no is clicked */
+#no:checked ~ .no-warning {
+  display: block;
+}
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 </style>
 </head>
 
 <body>
 
-<!-- Chess intro -->
-<div class="start-screen" onclick="startLove()">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Chess.com_logo.svg" alt="chess.com logo">
-  <p>Click here — where it all started ♟️</p>
+<!-- 🌻 Background -->
+<div class="flowers">
+  <span>🌻</span>
+  <span>🌻</span>
+  <span>🌻</span>
+  <span>🌻</span>
+  <span>🌻</span>
+  <span>🌻</span>
 </div>
 
-<!-- Main content -->
-<div class="container" id="loveBox">
+<!-- state holder -->
+<input type="checkbox" id="start">
+
+<!-- start screen -->
+<label for="start" class="start-screen">
+  <img src="thedate.png" alt="chess.com logo">
+  <p>where it all started</p>
+</label>
+
+<!-- main content -->
+<div class="container">
   <h1>For You Payal</h1>
-  <p>We met on chess.com for the first time, and I never knew a simple game could lead to something this beautiful.</p>
-  <p>You’ve changed me a lot. I love talking to you and sharing my feelings with you.</p>
-  <p>Every moment I chat with you feels like peace.</p>
+
+  <p>
+    We met on chess.com for the first time, August 10th 2025, we talked, we shared, I achieved literally to talk to you.
+    For the first time I gained courage and asked you your number, that was the best decision ever made by me and then I said I love you
+    on 16th Jan 2026 the best night in many years for me, I'll love you forever..........
+  </p>
+
+  <h2 style="margin-top:25px;">Will you be my Valentine?🌻</h2>
+
+  <input type="radio" id="yes" name="valentine">
+  <input type="radio" id="no" name="valentine">
+
+  <div class="buttons">
+    <label for="yes" class="btn yes">Yes</label>
+    <label for="no" class="btn no">No</label>
+  </div>
+
+  <!-- appears on NO -->
+  <div class="no-warning">
+    <img src="light.png" alt="anime pointing">
+    <p>Click on Yes</p>
+  </div>
+
+  <p class="response yes-text">
+    You just made me the happiest person today
+  </p>
+
+  <p class="response no-text">
+    Not valid IDIOT
+  </p>
 </div>
-
-<script>
-let flowerInterval;
-
-function startLove() {
-  document.querySelector('.start-screen').style.display = 'none';
-  document.getElementById('loveBox').style.display = 'block';
-  flowerInterval = setInterval(createFlower, 500);
-}
-
-function createFlower() {
-  const flower = document.createElement("div");
-  flower.classList.add("flower");
-  flower.innerHTML = "🌻";
-  flower.style.left = Math.random() * window.innerWidth + "px";
-  flower.style.fontSize = (Math.random() * 20 + 20) + "px";
-  flower.style.animationDuration = (Math.random() * 5 + 7) + "s";
-  document.body.appendChild(flower);
-  setTimeout(() => flower.remove(), 10000);
-}
-</script>
 
 </body>
 </html>
